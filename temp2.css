@@ -1,0 +1,78 @@
+body{
+	padding: 1px; margin: 20px;
+	background: #CCC; font-family: "Liberation Serif", serif;
+	font-style: normal;	font-weight: normal;
+	text-indent: 0px;}
+
+p	{margin-top: 10px; margin-bottom: 2px;}
+
+.hid{
+	display: none;}
+
+h1	{
+	text-align: center;
+	margin: 20px; padding: 0px;
+	letter-spacing: 3pt; font-size: 160%;}
+
+h2	{
+	text-align: center;
+	margin: 10px; padding: 0px;
+	letter-spacing: 1pt;  font-size: 140%;}
+
+h3	{
+	text-align: left; font-style: italic;
+	margin: 5px; padding: 0px; font-size: 120%;}
+
+div	{text-align: justify;}
+
+.C	{text-align: center;}
+
+.Cb {text-align: center; padding: 5pt;
+	border: solid 1px black;}
+
+#helptip{
+	position: fixed; background-color: #BFE; -moz-border-radius: 5px;
+	color: black; max-width: 400px; max-height: 500px; padding: 5px;
+}
+.redtxt	{color: red; margin-top: 20px;}
+
+.helper	{position: fixed; right: 0px; top: 0px;}
+
+.man	{position: fixed; left: 0px; top: 0px;}
+
+#lefcol{
+	float: left; width: 220px; margin-left: 205px; text-indent: 0px;
+	text-align: right;}
+
+#fsttwo{
+	float: left; width: 100%; margin-left: -205px; text-indent: 0px;}
+
+#rigcol{
+	padding-left: 100%; margin-left: -200px; text-indent: 0px;}
+
+#cencol{
+	margin-left: 430px; min-width: 300px; vertical-align: top;   
+	text-align: center; text-indent: 0px;}
+
+#widecen {
+	min-width: 800px; width: 100%; margin-top: 20px; min-height: 300px;
+	vertical-align: middle; text-align: center; text-indent: 0px;}
+
+#IMG {
+	width: 100%; margin: 0px; height: 75%; position: relative;
+	vertical-align: top; text-align: center; text-indent: 0px;}
+
+/********************* Таблицы: *******************/
+
+table	{
+	margin: 0 auto; text-align: center;
+	border: 5px double; padding: 5px;
+	border-collapse: collapse;}
+
+th	{
+	text-align: center; border: 3px solid black;
+	padding: 7px;}
+
+td	{
+	border: 3px inset black;}
+

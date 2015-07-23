@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<link rel="shortcut icon" href="favicon.ico">
+<title>Мониторинг</title>
+<link rel="stylesheet" href="temp2.css" type="text/css">
+<link rel="stylesheet" href="datetime.css" type="text/css">
+<script src="datetime.js" type="text/javascript" charset="koi8-r" language="javascript"></script>
+<script src="temp2.js" type="text/javascript" charset="koi8-r" language="javascript"></script>
+</head>
+<body OnLoad='init();'>
+<noscript><h1 align=center>Включите поддержку JavaScript<br>Turn on Javascript</noscript>
+<h2 id='header'></h2>
+<div id='body'></div>
+<div id='widecen'>
+<div id='fsttwo'>
+<div id='lefcol'>
+	<div class='C'>
+		Дата и время<p>
+		(MM/DD/YYYY HH:MM)<p>
+	</div>
+	с: <input name='t_beg' class='datetime' id='t_beg'> 
+	<img OnClick='displayDatePicker("t_beg", false, "mdy", "/");' class='dpBtn' src='cal.jpg'><br>
+	по: <input name='t_end' class='datetime' id='t_end'> 
+	<img OnClick='displayDatePicker("t_end", false, "mdy", "/");' class='dpBtn' src='cal.jpg'><br>
+	<span id='avertime' class='hid'>
+		интервал усреднения:<br>
+		<input id='averinterval' size=8 value='1'>&nbsp;
+		<select id='averval'>
+			<option value='60'>минут
+			<option value='3600'>часов
+			<option value='86400'>суток
+		</select>
+	</span>
+	<input type='button' OnClick='make_request();' value="OK"><p>
+	<div class='C' OnClick='checkAll(5,"mask");'>
+		<b>Показать данные:</b>
+	</div><div>
+		<input type='checkbox' name='mask' value='1' OnChange='chkvals();'>полный останов<br>
+		<input type='checkbox' name='mask' value='2' OnChange='chkvals();'>режим сопровождения<br>
+		<input type='checkbox' name='mask' value='4' OnChange='chkvals();'>готов<br>
+		<input type='checkbox' name='mask' value='8' OnChange='chkvals();'>прочее<br>
+		<input type='checkbox' name='mask' value='16' OnChange='chkvals();'>забрало открыто<br>
+		</div><p style="margin-top: 20px;">
+		<div class='C'><input type='button' id='Statbtn' OnClick='statistics();' value="Показать статистику"></div>
+		<p style="margin-top: 40px;">
+		<div class='Cb' id='visorbtn'></div>
+</div>
+<div id='cencol' class='C'>
+</div>
+</div><!--frsttwo-->
+<div id='rigcol'>
+	<b OnClick='checkAll();'>Отобразить (все)</b><p>
+	<b OnClick='checkAll(3);'>температуру:</b><br>
+	<input type='checkbox' name='show' value='1' OnChange='chkvals();'>внешнюю<br>
+	<input type='checkbox' name='show' value='2' OnChange='chkvals();'>внутреннюю<br>
+	<input type='checkbox' name='show' value='4' OnChange='chkvals();'>зеркала<p>
+	<input type='checkbox' name='show' value='8' OnChange='chkvals();'>Скорость ветра<br>
+	<input type='checkbox' name='show' value='16' OnChange='chkvals();'>Давление<br>
+	<input type='checkbox' name='show' value='32' OnChange='chkvals();'>Влажность<br>
+	<p style="margin-top: 25px;">
+	<div id='imcontrols'>
+		Формат изображения:<br>
+		<input type='radio' name='type' value='0' checked OnChange='chkvals();'>SVG<br>
+		<input type='radio' name='type' value='1' OnChange='chkvals();'>JPEG<br>
+		<input type='radio' name='type' value='2' OnChange='chkvals();'>GIF
+	</div>
+</div>
+</div><!--widecen-->
+</body>
+</html>

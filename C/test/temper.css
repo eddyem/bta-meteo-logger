@@ -1,0 +1,62 @@
+body{
+	padding: 1px; margin: 20px;
+	background: #CCC;
+	font-family: "Liberation Serif", serif;
+	font-style: normal;
+	font-weight: normal;
+	text-indent: 20px;}
+
+p	{
+	margin-top: 10px; margin-bottom: 2px;}
+
+.hid{
+	display: none;}
+
+h1	{
+	text-align: center;
+	margin: 20px; padding: 0px;
+	letter-spacing: 3pt; font-size: 160%;}
+
+h2	{
+	text-align: center;
+	margin: 10px; padding: 0px;
+	letter-spacing: 1pt;  font-size: 140%;}
+
+h3	{
+	text-align: left; font-style: italic;
+	margin: 5px; padding: 0px; font-size: 120%;}
+
+div	{
+	text-align: justify;}
+
+#lefcol{
+	float: left; width: 200px; margin-left: 200px;}
+
+#fsttwo{
+	float: left; width: 100%; margin-left: -200px;}
+
+#rigcol{
+	padding-left: 100%; margin-left: -200px;}
+
+#cencol{
+	margin-left: 400px; min-width: 300px; vertical-align: top;   
+	text-align: center; text-indent: 0px;}
+
+#widecen {
+	min-width: 800px; width: 100%; margin-top: 20px;
+	vertical-align: middle; text-align: center;}
+
+/********************* Таблицы: *******************/
+
+table	{
+	text-align: center;
+	border: 5px double; padding: 5px;
+	border-collapse: collapse;}
+
+th	{
+	text-align: center; border: 3px solid black;
+	padding: 7px;}
+
+td	{
+	border: 3px inset black;}
+

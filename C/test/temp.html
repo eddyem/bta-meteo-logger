@@ -1,0 +1,176 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Мониторинг</title>
+<link rel="stylesheet" href="temper.css" type="text/css">
+<script language="JavaScript"><!--
+var request;
+var timeout_id, monit_tid;
+var CGI_PATH = '/cgi-bin/eddy/test';
+var ShowOnGraph = 0;
+function $(Id){
+	return document.getElementById(Id);
+}
+
+var utf2koi={
+1025:179,
+1072:193,
+1073:194,
+1074:215,
+1075:199,
+1076:196,
+1077:197,
+1078:214,
+1079:218,
+1080:201,
+1081:202,
+1082:203,
+1083:204,
+1084:205,
+1085:206,
+1086:207,
+1087:208,
+1088:210,
+1089:211,
+1090:212,
+1091:213,
+1092:198,
+1093:200,
+1094:195,
+1095:222,
+1096:219,
+1097:221,
+1098:223,
+1099:217,
+1100:216,
+1101:220,
+1102:192,
+1103:209,
+1105:163
+};
+
+function hexdump(str){
+	var ret = "";
+	var l = str.length;
+	var i, ch, code;
+	for(i=0; i<l; i++){
+		ch = str.charCodeAt(i);
+		if(utf2koi[ch] != null)
+			code = utf2koi[ch];
+		else if(utf2koi[ch+32] != null)
+			code = utf2koi[ch+32]+32;
+		else code = ch;
+		ch = code.toString(16);
+		ret += "%" + ch;
+	}
+	return ret;
+}
+
+function TimeOut(){
+	request.abort();
+	handleError("Time over");
+}
+
+function handleError(message) {
+	ch_status("<h1>Ошибка xmlhttprequest:<br>" + message + "</h1>")
+}
+
+function sendrequest(req_STR){
+	request = new XMLHttpRequest();
+	request.open("POST", CGI_PATH, true);
+/*
+var params = 'name=' + encodeURIComponent(name) + '&surname=' + encodeURIComponent(surname)
+xmlhttp.open("POST", '/script.html', true)
+xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+request.setRequestHeader("Accept-Language", "ru, en");
+*/
+	request.setRequestHeader("Accept-Charset", "koi8-r");
+	request.overrideMimeType("multipart/form-data; charset=koi8-r"); 
+	request.onreadystatechange=function(){
+		if (request.readyState == 4){
+			if (request.status == 200){
+				clearTimeout(timeout_id);
+				ch_status(request.responseText);
+				var scripts = $('body').getElementsByTagName("script");
+				for(var i=0,len=scripts.length; i<len; i++)
+					eval.call(window, scripts[i].innerHTML);  
+			}
+			else handleError(request.statusText);
+		}
+	}
+	request.send(req_STR);
+	timeout_id = setTimeout(TimeOut, 10000);
+}
+
+function ch_status(stat){
+	$('body').innerHTML = stat;
+}
+
+function submit_form(){
+	var rs = "", i;
+	var F = $('body').childNodes;
+	for(i = 0; i < F.length; i++)
+		if(F[i].name && F[i].value)
+			rs += F[i].name + '=' + hexdump(F[i].value) + ' ';
+	sendrequest(rs);
+}
+
+function refresh_all(){
+	clearTimeout(monit_tid);
+	sendrequest("Show=1");
+	chkvals();
+//	$('widecen').style.display = 'block';
+}
+
+function start_monitoring(val){
+	var tt = (val) ? val : 60000;
+	monit_tid = setTimeout(refresh_all, tt);
+}
+
+
+function chkvals(){
+	var Boxes = document.getElementsByName('show');
+	ShowOnGraph = 0;
+	for(i = 0; i < Boxes.length; i++)
+		if(Boxes[i].checked) ShowOnGraph += parseInt(Boxes[i].value);
+	$('IMG').src = CGI_PATH + '?Graph=' + ShowOnGraph + '&' + Math.random();
+}
+var CHK = 1;
+function checkAll(ii){
+	var Boxes = document.getElementsByName('show');
+	var i;
+	if(!ii) ii = Boxes.length;
+	for(i = 0; i < ii; i++)
+		Boxes[i].checked = CHK;
+	CHK = !CHK;
+	chkvals();
+}
+
+//--></script>
+</head>
+<body onLoad='sendrequest("");'>
+<noscript><h1 align=center>Включите поддержку JavaScript<br>Turn on Javascript</noscript>
+<h2>Заголовок</h2>
+<div id='body'></div>
+<div id='widecen'>
+<div id='fsttwo'>
+<div id='lefcol'>
+
+</div>
+<div id='cencol'>
+<!--<embed id='IMG' width=100% height=75%  src='scene.svg' type='image/svg-xml'></embed>-->
+<img id='IMG' src='scene.svg' type='image/svg-xml'></embed>
+</div>
+</div>
+<div id='rigcol'>
+<b OnClick='checkAll();'>Отобразить (все)</b><p>
+<form id='temper'>
+<b OnClick='checkAll(3);'>температуру:</b>
+<div><input type='checkbox' name='show' value='1' OnChange='chkvals();'>внешнюю</div>
+<div><input type='checkbox' name='show' value='2' OnChange='chkvals();'>внутреннюю</div>
+<div><input type='checkbox' name='show' value='4' OnChange='chkvals();'>зеркала</div></form><p>
+<div><input type='checkbox' name='show' value='8' OnChange='chkvals();'>Скорость ветра</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<link rel="shortcut icon" href="favicon.ico">
+<title>Мониторинг</title>
+<link rel="stylesheet" href="temp2.css" type="text/css">
+<link rel="stylesheet" href="datetime.css" type="text/css">
+<script src="datetime.js" type="text/javascript" language="javascript"></script>
+<script src="temp2.js" type="text/javascript" language="javascript"></script>
+<script src="contexthelp.js" type="text/javascript" language="javascript"></script>
+</head>
+<body onload='init();' onkeydown="onkey(event.keyCode);">
+<noscript><h1 align=center>Включите поддержку JavaScript<br>Turn on Javascript</noscript>
+<h2 id='header'></h2>
+<div class='helper'><a href='#' onclick="startHelp(event);"  id='helper'>Контекстная помощь</a></div>
+<div class='man'><a href="pdf/description.pdf">Справка</a></div>
+<div id='body'></div>
+<div id='widecen'>
+<div id='fsttwo'>
+<div id='lefcol'>
+	<div class='C' id='dtheader'>
+		Дата и время<br>
+		(MM/DD/YYYY HH:MM)
+	</div><p></p>
+	с: <input name='t_beg' class='datetime' id='t_beg'> 
+	<img OnClick='displayDatePicker("t_beg", false, "mdy", "/");' class='dpBtn' src='cal.jpg' name='cal'><br>
+	по: <input name='t_end' class='datetime' id='t_end'> 
+	<img OnClick='displayDatePicker("t_end", false, "mdy", "/");' class='dpBtn' src='cal.jpg' name='cal'><br>
+	<span id='avertime' class='hid'>
+		интервал усреднения:<br>
+		<input id='averinterval' size=8 value='1'>&nbsp;
+		<select id='averval'>
+			<option value='60'>минут
+			<option value='3600'>часов
+			<option value='86400'>суток
+		</select>
+	</span>
+	<input type='button' OnClick='make_request();' value="OK" id='reqbtn'><p></p>
+	<b><div class='C' OnClick='checkAll(5,"mask");' id='modes'>
+		Показать данные:
+	</div></b><div>
+		<span id='Mstp'><input type='checkbox' name='mask' value='1' OnChange='chkvals();'>полный останов</span><br>
+		<span id='Mgd'><input type='checkbox' name='mask' value='2' OnChange='chkvals();'>режим сопровождения</span><br>
+		<span id='Mrd'><input type='checkbox' name='mask' value='4' OnChange='chkvals();'>готов</span><br>
+		<span id='Moth'><input type='checkbox' name='mask' value='8' OnChange='chkvals();'>прочее</span><br>
+		<span id='Mopn'><input type='checkbox' name='mask' value='16' OnChange='chkvals();'>забрало открыто</span><br>
+		</div><p style="margin-top: 20px;">
+		<div class='C'><input type='button' id='Statbtn' OnClick='statistics();' value="Показать статистику"></div>
+		<p style="margin-top: 40px;">
+		<div class='Cb' id='visorbtn'></div>
+</div>
+<div id='cencol' class='C'>
+</div>
+</div><!--frsttwo-->
+<div id='rigcol'>
+	<b OnClick='checkAll();' id='Sall'>Отобразить (все)</b><p></p>
+	<b OnClick='checkAll(3);' id='Stemp'>температуру:</b><br>
+	<span id='Sout'><input type='checkbox' name='show' value='1' OnChange='chkvals();'>внешнюю</span><br>
+	<span id='Sin'><input type='checkbox' name='show' value='2' OnChange='chkvals();'>внутреннюю</span><br>
+	<span id='Smr'><input type='checkbox' name='show' value='4' OnChange='chkvals();'>зеркала<p></p>
+	<span id='Swnd'><input type='checkbox' name='show' value='8' OnChange='chkvals();'>Скорость ветра</span><br>
+	<span id='Sprs'><input type='checkbox' name='show' value='16' OnChange='chkvals();'>Давление</span><br>
+	<span id='Shmd'><input type='checkbox' name='show' value='32' OnChange='chkvals();'>Влажность</span><br>
+	<p style="margin-top: 25px;">
+	<div id='imcontrols'>
+		Формат изображения:<br>
+		<span id='SVG'><input type='radio' name='type' value='0' checked OnChange='chkvals();'>SVG</span><br>
+		<span id='JPEG'><input type='radio' name='type' value='1' OnChange='chkvals();'>JPEG</span><br>
+		<span id='GIF'><input type='radio' name='type' value='2' OnChange='chkvals();'>GIF</span>
+	</div>
+</div>
+</div><!--widecen-->
+</body>
+</html>
