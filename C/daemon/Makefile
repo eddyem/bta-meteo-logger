@@ -1,13 +1,13 @@
 CC = gcc
-LDFLAGS = -lcrypt
-CPPFLAGS = 
-all : daemon tempmon tempmon_cli clean
-daemon : daemon.o
-	$(CC) $(LDFLAGS) daemon.c $(CPPFLAGS) -o daemon
-tempmon : client.o
-	$(CC) client.c $(CPPFLAGS) -o tempmon
-tempmon_cli : client_cli.o
-	$(CC) client_cli.c $(CPPFLAGS) -o tempmon_cli
+LDFLAGS = -lcrypt -lm
+all : daemon tempmon tempmon_cli
+daemon : daemon.c bta_shdata.c
+	$(CC) $(LDFLAGS) daemon.c bta_shdata.c $(CFLAGS) -o daemon
+tempmon : client.c
+	$(CC) client.c $(CFLAGS) -o tempmon
+tempmon_cli : client_cli.c
+	$(CC) client_cli.c $(CFLAGS) -o tempmon_cli
+
 clean:
 	/bin/rm -f *.o *~
 

@@ -93,7 +93,7 @@ void check4running(){
 	fclose(pidfile);
 }
 
-inline void LOG(char* thetime, char* thetext){
+static inline void LOG(char* thetime, char* thetext){
 	fprintf(stderr, "%s\t%s\n", thetime, thetext);
 	fprintf(F_log, "%s\t%s\n",  thetime, thetext);
 }
@@ -184,7 +184,7 @@ int get_data(monit_d *data){// получаем данные
 		*p++	= Pressure;
 		*h++	= val_Hmd;
 		if(++nn == MAX_DATA_LEN) break;
-		usleep(100000); // опрашиваем 10 раз в секунду
+		usleep(1000000); // опрашиваем 1 раз в секунду
 // !!! на цифре 10 завязано вычисление объема памяти для calloc, если надо будет
 // изменить величину паузы, необходимо и скорректировать MAX_DATA_LEN в main
 	}
@@ -280,7 +280,7 @@ int main(int argc, char** argv){
 	get_shm_block( &sdat, ClientSide);
 	shmid = shmget(SHM_KEY, sizeof(int), IPC_CREAT | 0666);
 	Visor = (int*) shmat(shmid, NULL, 0);
-	MAX_DATA_LEN = ((int)(TIMEINTERVAL)) * 10 + 11; // 11 = погрешность округления + 1 про запас
+	MAX_DATA_LEN = ((int)(TIMEINTERVAL)) + 2; 
 	t_out	= (data_type*)calloc(MAX_DATA_LEN, sizeof(data_type));
 	t_in	= (data_type*)calloc(MAX_DATA_LEN, sizeof(data_type));
 	t_mir	= (data_type*)calloc(MAX_DATA_LEN, sizeof(data_type));

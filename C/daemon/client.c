@@ -42,7 +42,7 @@ time_t aver_interval = 1;
 int out_fd;
 void sendSVG(const int image_type, unsigned char stat_mask, int im_height);
 
-inline void minmax(float *min, float *max, float param){
+static inline void minmax(float *min, float *max, float param){
 	if(param > *max) *max = param;
 	else if(param < *min) *min = param;
 }
@@ -56,7 +56,7 @@ void print_curvals(unsigned char stat_mask){ // stat_mask -  битовая маска для S
 			max_wind,  min_wind,  avr_wind,		// скорость ветра
 			max_pres,  min_pres,  avr_pres,		// давление
 			max_hmd,   min_hmd,   avr_hmd;		// влажность
-	printf(Content_type);
+	printf("%s", Content_type);
 	while(read(out_fd, &data, sizeof(data)) == sizeof(data)){
 		if(data.seconds < t_start) continue;
 		if(data.seconds > t_end) break;
@@ -104,7 +104,7 @@ void print_curvals(unsigned char stat_mask){ // stat_mask -  битовая маска для S
 		avr_otemp/d_len, avr_itemp/d_len, avr_mtemp/d_len,
 			avr_wind/d_len, avr_pres/d_len, avr_hmd/d_len,
 		_L(_s_Monlen_), d_len);
-		printf("<a href=\"%s?Save=1&Tstart=%d&Tend=%d&Stat=%d&Aver=%d\"'>%s</a>\n",
+		printf("<a href=\"%s?Save=1&Tstart=%zd&Tend=%zd&Stat=%d&Aver=%zd\"'>%s</a>\n",
 			SCRIPT_PATH, t_start, t_end, stat_mask, aver_interval, _L(_s_Save_file_));
 }
 
@@ -205,7 +205,7 @@ void fill_forms(const char* alert_message, const char S_flag){
 	unsigned char mask;
 	int im_ht = 600;
 	if(S_flag == 0){
-		printf(Content_type);
+		printf("%s", Content_type);
 		if(alert_message) printf("<div><h1 align=center>%s</h1></div>\n", alert_message);
 		return;
 	}
@@ -376,7 +376,7 @@ void find_starting_pos(){ // ищем в кэше смещение для начала поиска
 	int cache_fd;
 	Cache cache;
 	if((cache_fd = open(CACHE_FILE, O_RDONLY)) < 0){
-		printf(Content_type);
+		printf("%s", Content_type);
 		printf("<h1>%s</h1>", _L(_s_Cant_open_cache_));
 		exit(1);
 	}
@@ -430,7 +430,7 @@ void show_extremums(int ch){
 	struct tm ltime;
 	time_t t1[6], t2[6], t_first=0, t_last=0;
 
-	printf(Content_type);
+	printf("%s", Content_type);
 	if(get_qs_param(qs, "Stat", tmp, 16))
 		stat_mask = atoi(tmp);
 	if(stat_mask == 0) stat_mask = 0xFF;
@@ -588,7 +588,7 @@ void show_extremums(int ch){
 	if(ch == 0){
 		printf("<h2>%s</h2>\n", _L(_s_Mode_Times_));
 		inline void fmtprnt(char **str, time_t tm){
-			printf("%s: %d %s (%.2f %s)<br>\n", _L(str), tm, _L(_s_seconds_),
+			printf("%s: %zd %s (%.2f %s)<br>\n", _L(str), tm, _L(_s_seconds_),
 				((float)tm)/86400., _L(_s_days_));
 		}
 		fmtprnt(_s_Stopped_, t1[0]);
@@ -615,14 +615,14 @@ int main(){
 	if(get_qs_param(qs, "Visor", tmp, 128)){	// открываем/закрываем забрало
 		int shmid, param = atoi(tmp);
 		shmid = shmget(SHM_KEY, sizeof(int), IPC_CREAT | 0666);
-		printf(Content_type);
-		if(shmid < 0) printf(_L(_s_noVisor_));
+		printf("%s", Content_type);
+		if(shmid < 0) printf("%s", _L(_s_noVisor_));
 		else{
 			Visor = (int*) shmat(shmid, NULL, 0);
 			if(Visor){
 				if(param > 0) *Visor = !(*Visor); // param >0 - смена состояния
 			}
-			else printf(_L(_s_noVisor_));
+			else printf("%s", _L(_s_noVisor_));
 		}
 		printf("%s:<br><font color='%s'>%s</font><p  style='margin-top: 25px;'>%s:<br>", _L(_s_CurVstat_),
 			*Visor?"green":"red", *Visor?_L(_s_Vopen_):_L(_s_Vclose_), _L(_s_ChVstat_));

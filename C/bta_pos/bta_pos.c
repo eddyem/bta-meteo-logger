@@ -1,6 +1,6 @@
 #include "bta_shdata.h"
 
-inline double sec2deg(double angle){
+static inline double sec2deg(double angle){
 	return angle / 3600;
 }
 

@@ -15,13 +15,14 @@
 #include <time.h>
 #include <signal.h>
 #include <stdint.h>
+
 #ifndef __CLIENT_C__
 #include "bta_shdata.h"
 #endif
 
 #define WARN(...) do{fprintf(stderr, __VA_ARGS__);}while(0)
 
-#define TIMEINTERVAL	9.99 // интервал усреднения данных (в секундах)
+#define TIMEINTERVAL	599.999 // интервал усреднения данных (в секундах)
 #define LOG_FILE		"/home/eddy/_data/.temp_daemon" // файл с логами
 #define	CACHE_FILE		"/home/eddy/_data/.cache" // индексный файл
 #define OUT_FILE		"/home/eddy/_data/.out" // сама информация

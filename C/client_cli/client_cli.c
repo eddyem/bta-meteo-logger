@@ -141,7 +141,7 @@ void find_starting_pos(){ // ищем в кэше смещение для начала поиска
 			cache_fd = open("./cache", O_RDONLY);
 	}
 	if(cache_fd < 0){
-		WARN(_L(_s_Cant_open_cache_));
+		WARN("%s", _L(_s_Cant_open_cache_));
 		exit(1);
 	}
 	while(read(cache_fd, &cache, sizeof(cache)) > 0){
@@ -348,7 +348,7 @@ int main(int argc, char **argv){
 			out_fd = open("./out", O_RDONLY);
 	}
 	if(out_fd < 0){
-		WARN(_L(_s_Cant_open_data_));
+		WARN("%s", _L(_s_Cant_open_data_));
 		return(1);
 	}
 	if(lookout) print_dates();
